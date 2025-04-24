@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecom/core/ui/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/ui/values/dimen.dart';
@@ -6,6 +7,7 @@ import '../../core/ui/values/strings.dart';
 
 part 'banner_widget.dart';
 part 'category_widget.dart';
+part 'products_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

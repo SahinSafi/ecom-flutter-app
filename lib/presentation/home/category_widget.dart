@@ -17,10 +17,7 @@ class CategoryWidget extends StatelessWidget {
   Widget _buildCategoryItem(String url) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.network(url, fit: BoxFit.cover, height: 60, width: 60,),
-        ),
+        ImageLoader(url: url, fit: BoxFit.cover, height: 60, width: 60, borderRadius: 20,),
         SizedBox(height: Dimen.spacing8),
         Text("Category")
       ],

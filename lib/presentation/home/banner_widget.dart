@@ -27,9 +27,6 @@ class BannerWidget extends StatelessWidget {
   }
 
   Widget _buildBannerItem(String url) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Image.network(url, fit: BoxFit.cover, width: 400,),
-    );
+    return ImageLoader(url: url, fit: BoxFit.cover, width: 400);
   }
 }
