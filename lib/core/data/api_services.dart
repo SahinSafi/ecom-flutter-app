@@ -1,0 +1,12 @@
+import 'package:http/http.dart' as http;
+
+class ApiServices {
+
+  final _client = http.Client();
+  final _baseUrls = "sahinsafi.github.io";
+
+  Future<http.Response> fetchHomeApi() {
+    return _client.get(Uri.https(_baseUrls, "JsonHosting/ecom/home.json"));
+  }
+
+}
