@@ -1,6 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecom/core/entity/apientity/home_api_entity.dart';
+import 'package:ecom/core/ui/widgets/NetworkError.dart';
 import 'package:ecom/core/ui/widgets/network_image.dart';
+import 'package:ecom/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/ui/values/dimen.dart';
 import '../../core/ui/values/strings.dart';
@@ -16,14 +20,40 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(Strings.titleEcom),),
-      body: Column(
-        children: [
-          SizedBox(height: Dimen.spacing16,),
-          BannerWidget(),
-          SizedBox(height: Dimen.spacing24,),
-          CategoryWidget()
-        ],
+      body: BlocProvider(
+        create: (_) => HomeBloc(),
+        child: _buildBody(),
       ),
+    );
+  }
+  
+  Widget _buildBody() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        switch(state) {
+          case HomeApiLoading() : {
+            return const Center(child: CircularProgressIndicator());
+          }
+          case HomeApiSuccess() : {
+            return Column(
+              children: [
+                SizedBox(height: Dimen.spacing16,),
+                BannerWidget(banners: state.homeApiEntity.data.banner,),
+                SizedBox(height: Dimen.spacing24,),
+                CategoryWidget(categories: state.homeApiEntity.data.category,)
+              ],
+            );
+          }
+          case HomeApiError(): {
+            return NetworkError(
+                errorMessage: state.errorMessage,
+                retry: (){
+                  BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
+                }
+            );
+          }
+        }
+      },
     );
   }
 }

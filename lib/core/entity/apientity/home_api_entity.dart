@@ -35,8 +35,8 @@ HomeApiEntity copyWith({  num? statusCode,
 class Data {
 
   Data({
-      List<Banner>? banner, 
-      List<Category>? category,}){
+      List<BannerEntity>? banner,
+      List<CategoryEntity>? category,}){
     _banner = banner;
     _category = category;
 }
@@ -45,33 +45,33 @@ class Data {
     if (json['banner'] != null) {
       _banner = [];
       json['banner'].forEach((v) {
-        _banner?.add(Banner.fromJson(v));
+        _banner?.add(BannerEntity.fromJson(v));
       });
     }
     if (json['category'] != null) {
       _category = [];
       json['category'].forEach((v) {
-        _category?.add(Category.fromJson(v));
+        _category?.add(CategoryEntity.fromJson(v));
       });
     }
   }
 
-  List<Banner>? _banner;
-  List<Category>? _category;
+  List<BannerEntity>? _banner;
+  List<CategoryEntity>? _category;
 
-Data copyWith({  List<Banner>? banner,
-  List<Category>? category,
+Data copyWith({  List<BannerEntity>? banner,
+  List<CategoryEntity>? category,
 }) => Data(  banner: banner ?? _banner,
   category: category ?? _category,
 );
 
-  List<Banner> get banner => _banner ?? [];
-  List<Category> get category => _category ?? [];
+  List<BannerEntity> get banner => _banner ?? [];
+  List<CategoryEntity> get category => _category ?? [];
 
 }
 
-class Category {
-  Category({
+class CategoryEntity {
+  CategoryEntity({
       num? id, 
       String? title, 
       String? imageUrl,}){
@@ -80,7 +80,7 @@ class Category {
     _imageUrl = imageUrl;
 }
 
-  Category.fromJson(dynamic json) {
+  CategoryEntity.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['title'];
     _imageUrl = json['imageUrl'];
@@ -90,10 +90,10 @@ class Category {
   String? _title;
   String? _imageUrl;
 
-Category copyWith({  num? id,
+CategoryEntity copyWith({  num? id,
   String? title,
   String? imageUrl,
-}) => Category(  id: id ?? _id,
+}) => CategoryEntity(  id: id ?? _id,
   title: title ?? _title,
   imageUrl: imageUrl ?? _imageUrl,
 );
@@ -104,8 +104,8 @@ Category copyWith({  num? id,
 
 }
 
-class Banner {
-  Banner({
+class BannerEntity {
+  BannerEntity({
       num? id, 
       num? productId, 
       String? imageUrl,}){
@@ -114,7 +114,7 @@ class Banner {
     _imageUrl = imageUrl;
 }
 
-  Banner.fromJson(dynamic json) {
+  BannerEntity.fromJson(dynamic json) {
     _id = json['id'];
     _productId = json['productId'];
     _imageUrl = json['imageUrl'];
@@ -124,10 +124,10 @@ class Banner {
   num? _productId;
   String? _imageUrl;
 
-Banner copyWith({  num? id,
+BannerEntity copyWith({  num? id,
   num? productId,
   String? imageUrl,
-}) => Banner(  id: id ?? _id,
+}) => BannerEntity(  id: id ?? _id,
   productId: productId ?? _productId,
   imageUrl: imageUrl ?? _imageUrl,
 );

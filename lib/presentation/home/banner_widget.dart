@@ -1,17 +1,20 @@
 part of 'home_screen.dart';
 
 class BannerWidget extends StatelessWidget {
-  const BannerWidget({super.key});
+
+  final List<BannerEntity> banners;
+
+  const BannerWidget({super.key, required this.banners});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-        itemCount: bannerList.length,
+        itemCount: banners.length,
         itemBuilder: (context, itemIndex, pageViewIndex){
-          return _buildBannerItem(bannerList[itemIndex]);
+          return _buildBannerItem(banners[itemIndex].imageUrl);
         },
         options: CarouselOptions(
-          aspectRatio: 16 / 6,
+          aspectRatio: 16 / 5,
           initialPage: 0,
           enableInfiniteScroll: true,
           reverse: false,
@@ -27,6 +30,6 @@ class BannerWidget extends StatelessWidget {
   }
 
   Widget _buildBannerItem(String url) {
-    return ImageLoader(url: url, fit: BoxFit.cover, width: 400);
+    return ImageLoader(url: url, fit: BoxFit.cover, width: 400, borderRadius: 10,);
   }
 }

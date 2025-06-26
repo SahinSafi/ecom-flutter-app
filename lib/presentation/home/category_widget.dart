@@ -1,25 +1,28 @@
 part of 'home_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({super.key});
+
+  final List<CategoryEntity> categories;
+
+  const CategoryWidget({super.key, required this.categories});
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> category = [];
-    category.add(SizedBox(width: Dimen.spacing32,));
-    for (var url in bannerList) {
-      category.add(_buildCategoryItem(url));
-      category.add(SizedBox(width: Dimen.spacing32,));
+    final List<Widget> categoryWidgets = [];
+    categoryWidgets.add(SizedBox(width: Dimen.spacing32,));
+    for (var category in categories) {
+      categoryWidgets.add(_buildCategoryItem(category));
+      categoryWidgets.add(SizedBox(width: Dimen.spacing32,));
     }
-    return Expanded(child: ListView(scrollDirection: Axis.horizontal, children: category));
+    return Expanded(child: ListView(scrollDirection: Axis.horizontal, children: categoryWidgets));
   }
 
-  Widget _buildCategoryItem(String url) {
+  Widget _buildCategoryItem(CategoryEntity category) {
     return Column(
       children: [
-        ImageLoader(url: url, fit: BoxFit.cover, height: 60, width: 60, borderRadius: 20,),
+        ImageLoader(url: category.imageUrl, fit: BoxFit.cover, height: 60, width: 60, borderRadius: 20,),
         SizedBox(height: Dimen.spacing8),
-        Text("Category")
+        Text(category.title)
       ],
     );
   }
