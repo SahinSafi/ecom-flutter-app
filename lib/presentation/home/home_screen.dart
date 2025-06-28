@@ -47,6 +47,10 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
+
+    //state hoisting here
+    final TextEditingController searchController = TextEditingController();
+
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         switch (state) {
@@ -56,7 +60,13 @@ class HomeScreen extends StatelessWidget {
           case HomeApiSuccess(): {
               return Column(
                 children: [
-                  BannerWidget(banners: state.homeApiEntity.data.banner),
+                  BannerWidget(
+                    banners: state.homeApiEntity.data.banner,
+                    controller: searchController,
+                    onSearch: (text){
+                      BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
+                    },
+                  ),
                   SizedBox(height: AppDimensions.spacing24),
                   CategoryWidget(categories: state.homeApiEntity.data.category),
                 ],
