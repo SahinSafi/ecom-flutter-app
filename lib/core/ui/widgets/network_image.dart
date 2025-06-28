@@ -37,7 +37,11 @@ class ImageLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
-      child: Image.network(url, fit: fit, height: height, width: width),
+      child: Image.network(url,
+        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Image(image: AssetImage("assets/icon_image_error.png"), height: height, width: width,);
+        },
+        fit: fit, height: height, width: width,),
     );
   }
 
