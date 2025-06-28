@@ -4,4 +4,6 @@ extension BuildContextExtension on BuildContext {
 
    ColorScheme get getColor => Theme.of(this).colorScheme;
 
+   TextTheme get getTextStyle => Theme.of(this).textTheme;
+
 }

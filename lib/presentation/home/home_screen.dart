@@ -24,7 +24,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Column(
-          children: [Text("Delivery Address", style: TextStyle(fontSize: 12),), Text("Gulshan-1,Dhaka")],
+          children: [
+            Text("Delivery Address", style: context.getTextStyle.bodySmall?.copyWith(color: AppColors.hintColor),),
+            Text("Gulshan-1,Dhaka", style: context.getTextStyle.bodyLarge,)
+          ],
         ),
         centerTitle: true,
         actions: [
