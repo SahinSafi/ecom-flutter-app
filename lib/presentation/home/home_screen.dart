@@ -67,8 +67,17 @@ class HomeScreen extends StatelessWidget {
                       BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
                     },
                   ),
-                  SizedBox(height: AppDimensions.spacing24),
-                  CategoryWidget(categories: state.homeApiEntity.data.category),
+                  SizedBox(height: AppDimensions.spacing16),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing16),
+                      decoration: BoxDecoration(
+                          color: context.getColor.surface,
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+                      ),
+                      child: CategoryWidget(categories: state.homeApiEntity.data.category),
+                    ),
+                  ),
                 ],
               );
             }
