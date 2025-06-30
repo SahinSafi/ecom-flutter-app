@@ -8,39 +8,14 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildTitle(context),
-        SizedBox(
-          height: 130,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: ClampingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: categories.length,
-              itemBuilder: (context, index) => _buildCategoryItem(categories[index], context)
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: AppDimensions.spacing16,
-        right: AppDimensions.spacing16,
-        bottom: AppDimensions.spacing8,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Categories", style: context.getTextStyle.titleLarge,),
-          TextButton(onPressed: (){}, child: Row(children: [Text("See All"), Icon(Icons.arrow_forward)],))
-        ],
+    return SizedBox(
+      height: 130,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          physics: ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: categories.length,
+          itemBuilder: (context, index) => _buildCategoryItem(categories[index], context)
       ),
     );
   }

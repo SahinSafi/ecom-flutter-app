@@ -22,25 +22,28 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            Text("Delivery Address", style: context.getTextStyle.bodySmall?.copyWith(color: AppColors.hintColor),),
-            Text("Gulshan-1,Dhaka", style: context.getTextStyle.bodyLarge,)
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppBar(
+          title: Column(
+            children: [
+              Text("Delivery Address", style: context.getTextStyle.bodySmall?.copyWith(color: AppColors.hintColor),),
+              Text("Gulshan-1,Dhaka", style: context.getTextStyle.bodyLarge,)
+            ],
+          ),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: AppDimensions.spacing16),
+              child: IconButton(
+                onPressed: (){},
+                icon: Icon(Icons.shopping_cart_outlined),
+                padding: EdgeInsets.all(AppDimensions.spacing16),
+                style: IconButton.styleFrom(backgroundColor: context.getColor.surface),
+              ),
+            )
           ],
         ),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppDimensions.spacing16),
-            child: IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.shopping_cart_outlined),
-              padding: EdgeInsets.all(AppDimensions.spacing16),
-              style: IconButton.styleFrom(backgroundColor: context.getColor.surface),
-            ),
-          )
-        ],
       ),
       body: BlocProvider(
           create: (_) => HomeBloc(),
@@ -73,7 +76,6 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: AppDimensions.spacing16),
-                    //ProductsWidget()
                     Container(
                       padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing16),
                       decoration: BoxDecoration(
@@ -82,7 +84,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
+                          _buildTitle(context, "Categories", (){}),
                           CategoryWidget(categories: state.homeApiEntity.data.category),
+                          _buildTitle(context, "Products", (){}),
                           ProductsWidget()
                         ],
                       ),
@@ -103,6 +107,24 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
+
+  Widget _buildTitle(BuildContext context, String title, VoidCallback onPressed) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.spacing16,
+        right: AppDimensions.spacing16,
+        bottom: AppDimensions.spacing8,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: context.getTextStyle.titleLarge,),
+          TextButton(onPressed: onPressed, child: Row(children: [Text("See All"), Icon(Icons.arrow_forward)],))
+        ],
+      ),
+    );
+  }
+
 }
 
 final bannerList = [
