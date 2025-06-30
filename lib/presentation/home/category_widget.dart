@@ -9,38 +9,47 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final List<Widget> categoryWidgets = [];
-    categoryWidgets.add(SizedBox(width: AppDimensions.spacing16,));
-    for (var category in categories) {
-      categoryWidgets.add(_buildCategoryItem(category, context));
-      categoryWidgets.add(SizedBox(width: AppDimensions.spacing8,));
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-              left: AppDimensions.spacing16,
-              right: AppDimensions.spacing16,
-              bottom: AppDimensions.spacing8,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Categories", style: context.getTextStyle.titleLarge,),
-              TextButton(onPressed: (){}, child: Row(children: [Text("See All"), Icon(Icons.arrow_forward)],))
-            ],
+        _buildTitle(context),
+        SizedBox(
+          height: 130,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: categories.length,
+              itemBuilder: (context, index) => _buildCategoryItem(categories[index], context)
           ),
         ),
-        Expanded(child: ListView(scrollDirection: Axis.horizontal, children: categoryWidgets)),
       ],
     );
   }
 
+  Widget _buildTitle(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppDimensions.spacing16,
+        right: AppDimensions.spacing16,
+        bottom: AppDimensions.spacing8,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Categories", style: context.getTextStyle.titleLarge,),
+          TextButton(onPressed: (){}, child: Row(children: [Text("See All"), Icon(Icons.arrow_forward)],))
+        ],
+      ),
+    );
+  }
+
   Widget _buildCategoryItem(CategoryEntity category, BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.spacing8),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Card(
             elevation: 0,

@@ -42,7 +42,10 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: BlocProvider(create: (_) => HomeBloc(), child: _buildBody()),
+      body: BlocProvider(
+          create: (_) => HomeBloc(),
+          child: _buildBody()
+      ),
     );
   }
 
@@ -58,27 +61,34 @@ class HomeScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
           case HomeApiSuccess(): {
-              return Column(
-                children: [
-                  BannerWidget(
-                    banners: state.homeApiEntity.data.banner,
-                    controller: searchController,
-                    onSearch: (text){
-                      BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
-                    },
-                  ),
-                  SizedBox(height: AppDimensions.spacing16),
-                  Expanded(
-                    child: Container(
+              return SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: Column(
+                  children: [
+                    BannerWidget(
+                      banners: state.homeApiEntity.data.banner,
+                      controller: searchController,
+                      onSearch: (text){
+                        BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
+                      },
+                    ),
+                    SizedBox(height: AppDimensions.spacing16),
+                    //ProductsWidget()
+                    Container(
                       padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing16),
                       decoration: BoxDecoration(
                           color: context.getColor.surface,
                           borderRadius: BorderRadius.vertical(top: Radius.circular(20))
                       ),
-                      child: CategoryWidget(categories: state.homeApiEntity.data.category),
+                      child: Column(
+                        children: [
+                          CategoryWidget(categories: state.homeApiEntity.data.category),
+                          ProductsWidget()
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }
           case HomeApiError(): {

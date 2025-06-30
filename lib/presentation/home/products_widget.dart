@@ -6,6 +6,9 @@ class ProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: bannerList.length,
         itemBuilder: (context, index) {
           return _buildProductItem(bannerList[index]);
         }
@@ -13,11 +16,14 @@ class ProductsWidget extends StatelessWidget {
   }
 
   Widget _buildProductItem(String url) {
-    return Card(
-      child: Column(
-        children: [
-
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(50),
+      child: Card(
+        child: Column(
+          children: [
+            Text("product")
+          ],
+        ),
       ),
     );
   }
