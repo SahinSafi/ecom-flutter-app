@@ -22,28 +22,26 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          title: Column(
-            children: [
-              Text("Delivery Address", style: context.getTextStyle.bodySmall?.copyWith(color: AppColors.hintColor),),
-              Text("Gulshan-1,Dhaka", style: context.getTextStyle.bodyLarge,)
-            ],
-          ),
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: AppDimensions.spacing16),
-              child: IconButton(
-                onPressed: (){},
-                icon: Icon(Icons.shopping_cart_outlined),
-                padding: EdgeInsets.all(AppDimensions.spacing16),
-                style: IconButton.styleFrom(backgroundColor: context.getColor.surface),
-              ),
-            )
+      appBar: AppBar(
+        toolbarHeight: 70,
+        title: Column(
+          children: [
+            Text("Delivery Address", style: context.getTextStyle.bodySmall?.copyWith(color: AppColors.hintColor),),
+            Text("Gulshan-1,Dhaka", style: context.getTextStyle.bodyLarge,)
           ],
         ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: AppDimensions.spacing16),
+            child: IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.shopping_cart_outlined),
+              padding: EdgeInsets.all(AppDimensions.spacing16),
+              style: IconButton.styleFrom(backgroundColor: context.getColor.surface),
+            ),
+          )
+        ],
       ),
       body: BlocProvider(
           create: (_) => HomeBloc(),
