@@ -1,7 +1,9 @@
 part of 'home_screen.dart';
 
 class ProductsWidget extends StatelessWidget {
-  const ProductsWidget({super.key});
+
+  final List<ProductEntity> products;
+  const ProductsWidget({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,14 @@ class ProductsWidget extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacing16),
         shrinkWrap: true,
-        itemCount: bannerList.length,
+        itemCount: products.length,
         itemBuilder: (context, index) {
-          return _buildProductItem(bannerList[index], context);
+          return _buildProductItem(products[index], context);
         }
     );
   }
 
-  Widget _buildProductItem(String url, BuildContext context) {
+  Widget _buildProductItem(ProductEntity product, BuildContext context) {
     return Card(
       color: context.getColor.secondary,
       elevation: 0,
@@ -33,7 +35,7 @@ class ProductsWidget extends StatelessWidget {
           children: [
             Stack(
                 children:[
-                  ImageLoader(url: url, borderRadius: AppDimensions.radius8, height: 150, fit: BoxFit.cover,),
+                  ImageLoader(url: product.imageUrl, borderRadius: AppDimensions.radius8, height: 150, fit: BoxFit.cover,),
                   Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
@@ -47,8 +49,8 @@ class ProductsWidget extends StatelessWidget {
                 ]
             ),
             SizedBox(height: AppDimensions.spacing8,),
-            Text("product title is here...", style: context.getTextStyle.bodySmall,),
-            Text("500 BDT", style: context.getTextStyle.bodyMedium,),
+            Text(product.title, style: context.getTextStyle.bodySmall,overflow: TextOverflow.ellipsis,),
+            Text("${product.currentPrice} BDT", style: context.getTextStyle.bodyMedium,),
           ],
         ),
       ),

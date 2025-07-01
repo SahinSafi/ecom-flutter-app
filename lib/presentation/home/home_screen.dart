@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecom/core/entity/apientity/home_api_entity.dart';
+import 'package:ecom/core/entity/apientity/products_api_entity.dart';
 import 'package:ecom/core/ui/extentionfunction/buildcontext_extension.dart';
 import 'package:ecom/core/ui/theme/app_colors.dart';
 import 'package:ecom/core/ui/widgets/NetworkError.dart';
@@ -57,50 +58,47 @@ class HomeScreen extends StatelessWidget {
 
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        switch (state) {
-          case HomeApiLoading(): {
-              return const Center(child: CircularProgressIndicator());
-            }
-          case HomeApiSuccess(): {
-              return SingleChildScrollView(
-                physics: ScrollPhysics(),
-                child: Column(
-                  children: [
-                    BannerWidget(
-                      banners: state.homeApiEntity.data.banner,
-                      controller: searchController,
-                      onSearch: (text){
-                        BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
-                      },
-                    ),
-                    SizedBox(height: AppDimensions.spacing16),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing16),
-                      decoration: BoxDecoration(
-                          color: context.getColor.surface,
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20))
-                      ),
-                      child: Column(
-                        children: [
-                          _buildTitle(context, "Categories", (){}),
-                          CategoryWidget(categories: state.homeApiEntity.data.category),
-                          _buildTitle(context, "Products", (){}),
-                          ProductsWidget()
-                        ],
-                      ),
-                    ),
-                  ],
+
+        if(state.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }else if(state.errorMessage.isNotEmpty) {
+          return NetworkError(
+            errorMessage: state.errorMessage,
+            retry: () {
+              BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
+            },
+          );
+        } else {
+          return SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: [
+                BannerWidget(
+                  banners: state.homeApiEntity.data.banner,
+                  controller: searchController,
+                  onSearch: (text){
+                    BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
+                  },
                 ),
-              );
-            }
-          case HomeApiError(): {
-              return NetworkError(
-                errorMessage: state.errorMessage,
-                retry: () {
-                  BlocProvider.of<HomeBloc>(context).add(FetchHomeApiEvent());
-                },
-              );
-            }
+                SizedBox(height: AppDimensions.spacing16),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing16),
+                  decoration: BoxDecoration(
+                      color: context.getColor.surface,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+                  ),
+                  child: Column(
+                    children: [
+                      _buildTitle(context, "Categories", (){}),
+                      CategoryWidget(categories: state.homeApiEntity.data.category),
+                      _buildTitle(context, "Products", (){}),
+                      ProductsWidget(products: state.productsApiEntity.data,)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
         }
       },
     );
@@ -124,11 +122,3 @@ class HomeScreen extends StatelessWidget {
   }
 
 }
-
-final bannerList = [
-  "https://static.vecteezy.com/system/resources/previews/027/957/580/non_2x/cute-card-with-cat-free-photo.jpg",
-  "https://static.vecteezy.com/system/resources/previews/012/098/088/non_2x/banner-background-cute-cats-say-hello-free-vector.jpg",
-  "https://static.vecteezy.com/system/resources/previews/035/381/164/non_2x/ai-generated-a-tabby-cat-looks-up-into-the-sun-free-photo.jpg",
-  "https://static.vecteezy.com/system/resources/previews/024/705/172/non_2x/empty-space-background-with-cat-illustration-ai-generative-free-photo.jpg",
-  "https://static.vecteezy.com/system/resources/thumbnails/038/954/317/small_2x/ai-generated-stylish-white-cat-with-sunglasses-and-bow-tie-posing-on-a-pink-background-ample-copy-space-on-the-side-photo.jpeg",
-];

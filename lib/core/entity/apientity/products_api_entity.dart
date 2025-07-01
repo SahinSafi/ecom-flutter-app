@@ -1,10 +1,10 @@
 class ProductsApiEntity {
 
   ProductsApiEntity({
-      num? statusCode, 
-      String? message, 
-      num? page, 
-      List<Data>? data,}){
+      num? statusCode,
+      String? message,
+      num? page,
+      List<ProductEntity>? data,}){
     _statusCode = statusCode;
     _message = message;
     _page = page;
@@ -18,7 +18,7 @@ class ProductsApiEntity {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
+        _data?.add(ProductEntity.fromJson(v));
       });
     }
   }
@@ -26,23 +26,23 @@ class ProductsApiEntity {
   num? _statusCode;
   String? _message;
   num? _page;
-  List<Data>? _data;
+  List<ProductEntity>? _data;
 
   num get statusCode => _statusCode ?? -1;
   String get message => _message ?? "";
   num get page => _page ?? 1;
-  List<Data> get data => _data ?? [];
+  List<ProductEntity> get data => _data ?? [];
 
 }
 
-class Data {
+class ProductEntity {
 
-  Data({
-      num? id, 
-      String? title, 
-      num? previousPrice, 
-      num? currentPrice, 
-      bool? inStock, 
+  ProductEntity({
+      num? id,
+      String? title,
+      num? previousPrice,
+      num? currentPrice,
+      bool? inStock,
       String? imageUrl,}){
     _id = id;
     _title = title;
@@ -52,7 +52,7 @@ class Data {
     _imageUrl = imageUrl;
 }
 
-  Data.fromJson(dynamic json) {
+  ProductEntity.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['title'];
     _previousPrice = json['previousPrice'];

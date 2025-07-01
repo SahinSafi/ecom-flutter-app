@@ -1,37 +1,35 @@
 part of 'home_bloc.dart';
 
-sealed class HomeState extends Equatable {
-  const HomeState();
-}
+class HomeState extends Equatable {
 
-final class HomeApiLoading extends HomeState {
-
-  const HomeApiLoading();
-
-  @override
-  List<Object?> get props => [];
-
-}
-
-final class HomeApiSuccess extends HomeState {
-
-  final HomeApiEntity homeApiEntity;
-
-  const HomeApiSuccess({required this.homeApiEntity});
-
-  @override
-  List<Object?> get props => [homeApiEntity];
-
-}
-
-final class HomeApiError extends HomeState {
-
+  final bool isLoading;
   final String errorMessage;
+  final HomeApiEntity homeApiEntity;
+  final ProductsApiEntity productsApiEntity;
 
-  const HomeApiError({required this.errorMessage});
+  HomeState({
+    this.isLoading = true,
+    this.errorMessage = "",
+    required this.homeApiEntity,
+    required this.productsApiEntity
+  });
+
+  HomeState copyWith({
+    bool? isLoading,
+    String? errorMessage,
+    HomeApiEntity? homeApiEntity,
+    ProductsApiEntity? productsApiEntity
+  }) {
+    return HomeState(
+      isLoading: isLoading ?? false,
+      errorMessage: errorMessage ?? "",
+      homeApiEntity: homeApiEntity ?? this.homeApiEntity,
+      productsApiEntity: productsApiEntity ?? this.productsApiEntity
+    );
+  }
 
   @override
-  List<Object?> get props => [errorMessage];
+  List<Object?> get props => [isLoading, errorMessage, homeApiEntity, productsApiEntity];
 
 }
 
