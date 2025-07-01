@@ -9,4 +9,8 @@ class ApiServices {
     return _client.get(Uri.https(_baseUrls, "JsonHosting/ecom/home.json"));
   }
 
+  Future<http.Response> fetchProductsApi(int page) {
+    return _client.get(Uri.https(_baseUrls, "JsonHosting/ecom/products/$page.json"));
+  }
+
 }

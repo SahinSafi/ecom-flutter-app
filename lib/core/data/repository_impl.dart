@@ -6,6 +6,7 @@ import 'package:ecom/core/data/api_services.dart';
 import 'package:ecom/core/data/network_bound_resource.dart';
 import 'package:ecom/core/domain/repository.dart';
 import 'package:ecom/core/entity/apientity/home_api_entity.dart';
+import 'package:ecom/core/entity/apientity/products_api_entity.dart';
 
 
 class RepositoryImpl implements Repository {
@@ -16,7 +17,7 @@ class RepositoryImpl implements Repository {
   RepositoryImpl(this._apiServices, this._boundResource);
 
   @override
-  Future<ApiResult<HomeApiEntity>> fetchHomeApi()async {
+  Future<ApiResult<HomeApiEntity>> fetchHomeApi() async {
 
     final result = await _boundResource.downloadData(()=>_apiServices.fetchHomeApi());
 
@@ -24,6 +25,24 @@ class RepositoryImpl implements Repository {
       case ApiSuccess() : {
         final body = json.decode(result.data);
         final response = HomeApiEntity.fromJson(body);
+        return ApiSuccess(response);
+      }
+      case ApiError() : {
+        return ApiError(result.errorCode, result.errorMessage);
+      }
+    }
+
+  }
+
+  @override
+  Future<ApiResult<ProductsApiEntity>> fetchProductApi(int page) async {
+
+    final result = await _boundResource.downloadData(()=>_apiServices.fetchProductsApi(page));
+
+    switch(result) {
+      case ApiSuccess() : {
+        final body = json.decode(result.data);
+        final response = ProductsApiEntity.fromJson(body);
         return ApiSuccess(response);
       }
       case ApiError() : {
