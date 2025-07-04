@@ -35,7 +35,7 @@ class ProductsWidget extends StatelessWidget {
           children: [
             Stack(
                 children:[
-                  ImageLoader(url: product.imageUrl, borderRadius: AppDimensions.radius8, height: 150, fit: BoxFit.cover,),
+                  ImageLoader(url: product.imageUrl, borderRadius: AppDimensions.radius8, height: 150, fit: BoxFit.contain,),
                   Align(
                       alignment: Alignment.topRight,
                       child: IconButton(

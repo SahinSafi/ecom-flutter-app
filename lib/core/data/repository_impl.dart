@@ -18,38 +18,22 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<ApiResult<HomeApiEntity>> fetchHomeApi() async {
-
-    final result = await _boundResource.downloadData(()=>_apiServices.fetchHomeApi());
-
-    switch(result) {
-      case ApiSuccess() : {
-        final body = json.decode(result.data);
-        final response = HomeApiEntity.fromJson(body);
-        return ApiSuccess(response);
-      }
-      case ApiError() : {
-        return ApiError(result.errorCode, result.errorMessage);
-      }
-    }
-
+    return _boundResource.downloadData(
+        apiCall: () => _apiServices.fetchHomeApi(),
+        convertJsonToObject: (jsonBody) {
+          return HomeApiEntity.fromJson(jsonBody);
+        }
+    );
   }
 
   @override
   Future<ApiResult<ProductsApiEntity>> fetchProductApi(int page) async {
-
-    final result = await _boundResource.downloadData(()=>_apiServices.fetchProductsApi(page));
-
-    switch(result) {
-      case ApiSuccess() : {
-        final body = json.decode(result.data);
-        final response = ProductsApiEntity.fromJson(body);
-        return ApiSuccess(response);
-      }
-      case ApiError() : {
-        return ApiError(result.errorCode, result.errorMessage);
-      }
-    }
-
+    return _boundResource.downloadData(
+        apiCall: () => _apiServices.fetchProductsApi(page),
+        convertJsonToObject: (jsonBody) {
+          return ProductsApiEntity.fromJson(jsonBody);
+        }
+    );
   }
 
 }
