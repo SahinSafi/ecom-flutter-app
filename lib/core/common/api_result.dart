@@ -7,7 +7,11 @@ sealed class ApiResult<Type> extends Equatable {
 
 final class ApiSuccess<Type> extends ApiResult<Type> {
   final Type data;
+
   ApiSuccess(this.data);
+
+  @override
+  List<Object?> get props => [data];
 }
 
 final class ApiError<Type> extends ApiResult<Type> {
@@ -17,4 +21,6 @@ final class ApiError<Type> extends ApiResult<Type> {
 
   ApiError(this.errorCode, this.errorMessage);
 
+  @override
+  List<Object?> get props => [errorCode, errorMessage];
 }
